@@ -5,7 +5,6 @@
  */
 
 const User = require("../models/User");
-const Subscription = require("../models/Subscription");
 
 /**
  * Get user profile
@@ -22,13 +21,6 @@ exports.getUserProfile = async (req, res) => {
       return res.status(404).json({ status: "error", message: "User not found" });
     }
 
-    // Optionally fetch subscription status
-    const subscription = await Subscription.findByUserId(userId);
-    const isActive = subscription && 
-                     subscription.status === "active" && 
-                     subscription.end_date && 
-                     new Date(subscription.end_date) > new Date();
-
     // Return user profile data (excluding sensitive info like password hash)
     res.status(200).json({
       status: "success",
@@ -38,10 +30,7 @@ exports.getUserProfile = async (req, res) => {
           email: user.email,
           role: user.role,
           created_at: user.created_at,
-          stripe_customer_id: user.stripe_customer_id,
           whatsapp_ready: user.whatsapp_ready,
-          subscription_status: isActive ? "active" : (subscription ? subscription.status : "none"),
-          subscription_end_date: subscription ? subscription.end_date : null
         },
       },
     });
