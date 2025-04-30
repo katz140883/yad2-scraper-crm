@@ -5,7 +5,6 @@
  */
 
 const User = require("../models/User");
-const Subscription = require("../models/Subscription");
 const Lead = require("../models/Lead"); // Assuming Lead model exists or will be created
 
 /**
@@ -36,10 +35,9 @@ exports.getUserById = async (req, res) => {
       return res.status(404).json({ status: "error", message: "User not found" });
     }
     // Optionally fetch related subscription and leads
-    const subscription = await Subscription.findByUserId(userId);
     // const leads = await Lead.findByUserId(userId); // Assuming Lead model has findByUserId
     
-    res.status(200).json({ status: "success", data: { user, subscription /*, leads */ } });
+    res.status(200).json({ status: "success", data: { user /*, leads */ } });
   } catch (error) {
     console.error("Error getting user by ID:", error);
     res.status(500).json({ status: "error", message: "Failed to get user" });
@@ -72,42 +70,6 @@ exports.updateUser = async (req, res) => {
 };
 
 /**
- * Get all subscriptions
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
-exports.getAllSubscriptions = async (req, res) => {
-  try {
-    const subscriptions = await Subscription.getAll();
-    res.status(200).json({ status: "success", data: { subscriptions } });
-  } catch (error) {
-    console.error("Error getting all subscriptions:", error);
-    res.status(500).json({ status: "error", message: "Failed to get subscriptions" });
-  }
-};
-
-/**
- * Manually update a subscription (e.g., extend, change status)
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
-exports.updateSubscription = async (req, res) => {
-  try {
-    const subscriptionId = req.params.subscriptionId;
-    const updateData = req.body; // e.g., { status: "active", end_date: "..." }
-    
-    const updatedSubscription = await Subscription.update(subscriptionId, updateData);
-    if (!updatedSubscription) {
-      return res.status(404).json({ status: "error", message: "Subscription not found" });
-    }
-    res.status(200).json({ status: "success", data: { subscription: updatedSubscription } });
-  } catch (error) {
-    console.error("Error updating subscription:", error);
-    res.status(500).json({ status: "error", message: "Failed to update subscription" });
-  }
-};
-
-/**
  * Get system statistics (placeholder)
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
@@ -116,7 +78,6 @@ exports.getSystemStats = async (req, res) => {
   try {
     // Placeholder: Implement logic to fetch stats
     const totalUsers = 100; // Example
-    const activeSubscriptions = 80; // Example
     const totalLeads = 5000; // Example
     const activeBots = 75; // Example (count users with ready WhatsApp)
     
@@ -124,7 +85,6 @@ exports.getSystemStats = async (req, res) => {
       status: "success",
       data: {
         totalUsers,
-        activeSubscriptions,
         totalLeads,
         activeBots
       }
