@@ -5,8 +5,6 @@ const {
   getAllUsers,
   getUserById,
   updateUser,
-  getAllSubscriptions,
-  updateSubscription,
   getSystemStats
 } = require("../controllers/adminController");
 
@@ -29,18 +27,6 @@ router.get("/users/:userId", getUserById);
 // @desc    Update user details (e.g., role)
 // @access  Admin
 router.put("/users/:userId", updateUser);
-
-// --- Subscription Management Routes ---
-
-// @route   GET /api/admin/subscriptions
-// @desc    Get all subscriptions
-// @access  Admin
-router.get("/subscriptions", getAllSubscriptions);
-
-// @route   PUT /api/admin/subscriptions/:subscriptionId
-// @desc    Manually update a subscription
-// @access  Admin
-router.put("/subscriptions/:subscriptionId", updateSubscription);
 
 // --- System Statistics Route ---
 
