@@ -41,7 +41,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 5001;
+// Use PORT from environment variable for Railway, default to 8080
+const PORT = process.env.PORT || 8080;
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -56,3 +57,4 @@ server.listen(PORT, () => {
   // Initialize WhatsApp clients for active users on startup
   initializeAllActiveClients();
 });
+
