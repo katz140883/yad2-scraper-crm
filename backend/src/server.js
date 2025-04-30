@@ -6,7 +6,6 @@ require("dotenv").config();
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
 const leadRoutes = require("./routes/leads");
-const subscriptionRoutes = require("./routes/subscriptions");
 const adminRoutes = require("./routes/admin");
 const whatsappRoutes = require("./routes/whatsapp");
 
@@ -23,7 +22,6 @@ app.use(express.json()); // For parsing application/json
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/leads", leadRoutes);
-app.use("/api/subscriptions", subscriptionRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/whatsapp", whatsappRoutes);
 
