@@ -57,3 +57,5 @@ server.listen(PORT, HOST, () => {
   initializeAllActiveClients();
 });
 
+
+// dotenv configuration confirmed
